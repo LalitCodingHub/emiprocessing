@@ -25,5 +25,7 @@
                 @endforeach
             </tbody>
         </table>
+    <a href="{{route('process.data.page')}}" class='btn btn-primary'>Process Data</a>
+
     </div>
     @endsection

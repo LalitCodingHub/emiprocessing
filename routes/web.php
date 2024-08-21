@@ -20,15 +20,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
+// Auth::routes();
+Auth::routes([
+    'register' => false,  // Disable registration route
+    'reset' => false,     // Disable password reset routes
+    'verify' => false,    // Disable email verification routes
+    'confirm' => false,   // Disable password confirmation routes
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/loan-details', [LoanDetailsController::class, 'index'])->name('loan.details');
+Route::redirect('/home', '/loan-details');
 
-
-
-Route::get('/process-data', [LoanEMIController::class, 'showForm'])->name('process.data.page');
-Route::post('/process-data', [LoanEMIController::class, 'processData'])->name('process.data');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/loan-details', [LoanDetailsController::class, 'index'])->name('loan.details');
+    Route::get('/process-data', [LoanEMIController::class, 'showForm'])->name('process.data.page');
+    Route::post('/process-data', [LoanEMIController::class, 'processData'])->name('process.data');
+});

@@ -15,10 +15,12 @@
                             <label for="username" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
-                                <label for="username">Username</label>
-                                <input type="text" id="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+
                                 @error('username')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
